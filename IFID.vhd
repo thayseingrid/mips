@@ -1,12 +1,12 @@
 library ieee;
-use.ieee.std_logic_1164.all;
+use ieee.std_logic_1164.all;
 
 entity IFID is
     port (
         clock  : in std_logic;
         reset  : in std_logic;
         inst   : in std_logic_vector(31 downto 0);
-        ev_ pc : in std_logic_vector(31 downto 0);
+        ev_pc  : in std_logic_vector(31 downto 0);
         opcode : out std_logic_vector(5 downto 0);
         rs     : out std_logic_vector(4 downto 0);
         rt     : out std_logic_vector(4 downto 0);
@@ -34,14 +34,14 @@ begin
             target <= (others => '0');
             sv_pc  <= (others => '0');
         elsif clock'event and clock = '1' then
-            opcode <= inst(31 downto 26);
-            rs <= inst(25 downto 21);
-            rt <= inst(20 downto 16);
-            rd <= inst(15 downto 11);
-            shamt <= inst(10 downto 6);
-            funct <= inst(5 downto 0);
-            immd <= inst(15 downto 0);
-            target <= inst(25 downto 0);
+            opcode  <= inst(31 downto 26);
+            rs      <= inst(25 downto 21);
+            rt      <= inst(20 downto 16);
+            rd      <= inst(15 downto 11);
+            shamt   <= inst(10 downto 6);
+            funct   <= inst(5 downto 0);
+            immd    <= inst(15 downto 0);
+            target  <= inst(25 downto 0);
         end if;            
     end process;
 end IFID;
