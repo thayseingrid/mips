@@ -23,20 +23,19 @@ end estagio_memoria;
 architecture estagio_memoria of estagio_memoria is
 component memoria_dados is
     port (
-        clock : in std_logic;
-        load  : in std_logic;
+        clock    : in std_logic;
+        load     : in std_logic;
         endereco : in std_logic_vector(5 downto 0);
-        v_in  : in std_logic_vector(31 downto 0);
-        v_out : out std_logic_vector(31 downto 0)
+        v_in     : in std_logic_vector(31 downto 0);
+        v_out    : out std_logic_vector(31 downto 0)
     );
 end component memoria_dados;
 
-
 begin
     sj_endereco <= ej_endereco;
-    s_wb <= e_wb;
-    s_reg_dst <= e_reg_dst;
-    s_ula <= e_ula;
+    s_wb        <= e_wb;
+    s_reg_dst   <= e_reg_dst;
+    s_ula       <= e_ula;
 
     process(e_zero, e_m)
     begin
@@ -45,11 +44,11 @@ begin
 
     memoria_dados_u : memoria_dados
     port map (
-        clock => clock,
-        load => e_m(0),
+        clock    => clock,
+        load     => e_m(0),
         endereco => e_ula(5 downto 0),
-        v_in => e_dado,
-        v_out => s_memoria    
+        v_in     => e_dado,
+        v_out    => s_memoria    
     );
 
 end estagio_memoria;
