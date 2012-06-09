@@ -30,7 +30,7 @@ begin
             s_wb        <= (others => '0'); 
             s_m         <= (others => '0'); 
             sj_endereco <= (others => '0'); 
-            s_zero      <= (others => '0'); 
+            s_zero      <= '0'; 
             s_ula       <= (others => '0'); 
             s_dado      <= (others => '0'); 
             s_reg_dst   <= (others => '0');

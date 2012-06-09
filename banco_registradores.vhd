@@ -32,8 +32,8 @@ begin
         end if;
     end process;
 
-    read_reg1 <= regs(to_integer(unsigned(read_reg1)));
-    read_reg2 <= regs(to_integer(unsigned(read_reg2)));
+    read_data1 <= regs(to_integer(unsigned(read_reg1)));
+    read_data2 <= regs(to_integer(unsigned(read_reg2)));
 end banco_registradores;
 
         

@@ -58,17 +58,37 @@ begin
             s_immd <= x"0000" & e_immd;
         end if;
     end process;
-    
+
+    -- controle
+    process(opcode, shamt, funct)
+    begin
+        if opcode = "000000" then
+            if shamt = "00000" and funct = "100000" then
+                s_ex <= "000001";
+                s_m  <= "00";
+                s_wb <= "10";
+            else
+                s_ex <= "000000";
+                s_m  <= "00";
+                s_wb <= "00"; 
+            end if;
+        else
+            s_ex <= "000000";
+            s_m  <= "00";
+            s_wb <= "00"; 
+        end if;
+    end process;
+
     banco_registradores_u : banco_registradores
     port map (
-        clock      <= clock,
-        reg_write  <= regwrite,
-        read_reg1  <= rs,
-        read_reg2  <= e_rt,
-        write_reg  <= write_reg,
-        write_data <= write_data,
-        read_data1 <= read_data1,
-        read_data2 <= read_data2
+        clock      => clock,
+        reg_write  => regwrite,
+        read_reg1  => rs,
+        read_reg2  => e_rt,
+        write_reg  => write_reg,
+        write_data => write_data,
+        read_data1 => read_data1,
+        read_data2 => read_data2
     );
         
 end estagio_decodificacao;
