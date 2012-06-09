@@ -12,8 +12,13 @@ entity execucao_instrucao is
         rtReg    : in std_logic_vector (4 downto 0);
         OrigALU  : in std_logic;
         RegDst   : in std_logic;
-        Reg_mux2_out : out std_logic_vector (4 downto 0);
+        e_wb     : in std_logic_vector(1 downto 0);
+        e_m      : in std_logic_vector(1 downto 0);
+        s_wb     : out std_logic_vector(1 downto 0);
+        s_m      : out std_logic_vector(1 downto 0);
+        write_reg : out std_logic_vector (4 downto 0);
         res      : out std_logic_vector (31 downto 0);
+        write_data : out std_logic_vector(31 downto 0);
         overflow : out std_logic
     );
 end execucao_instrucao;
@@ -38,6 +43,9 @@ begin
     v_op_alu <= op_alu;
     res <= v_res;
     overflow <= '0'; --mudar depois!    
+    s_wb <= e_wb;
+    s_m <= e_m;
+    write_data <= rt_value;
 
     -- ULA
     process(v_op_alu, v_op1, v_op2)
@@ -77,7 +85,7 @@ begin
             v_mux2_out <= v_mux2_in2;
         end if;
     end process;
-   Reg_mux2_out <= v_mux2_out;
+   write_reg <= v_mux2_out;
 
     v_mux1_in2 <= immdt;
     v_mux1_in1 <= rt_value;
