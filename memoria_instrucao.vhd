@@ -15,7 +15,7 @@ architecture memoria_instrucao of memoria_instrucao is
     signal ram : tipo_ram;
 begin
     ram <= (
-        0 => x"12345678",
+        0 => "000000" & "00011" & "00011" & "00010" & "00000" & "100000", --x"12345678",
         1 => x"BABABABA",
         2 => x"00000000",
         others => x"00000000"

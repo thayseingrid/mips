@@ -34,6 +34,7 @@ architecture estagio_decodificacao of estagio_decodificacao is
 component banco_registradores is
     port (
         clock      : in std_logic;
+        reset      : in std_logic;
         reg_write  : in std_logic;
         read_reg1  : in std_logic_vector(4 downto 0);
         read_reg2  : in std_logic_vector(4 downto 0);
@@ -64,7 +65,7 @@ begin
     begin
         if opcode = "000000" then
             if shamt = "00000" and funct = "100000" then
-                s_ex <= "000001";
+                s_ex <= "100000";
                 s_m  <= "00";
                 s_wb <= "10";
             else
@@ -82,6 +83,7 @@ begin
     banco_registradores_u : banco_registradores
     port map (
         clock      => clock,
+        reset      => reset,
         reg_write  => regwrite,
         read_reg1  => rs,
         read_reg2  => e_rt,

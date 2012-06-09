@@ -133,23 +133,22 @@ architecture mips of mips is
 
     component execucao_instrucao is 
     port (
-        rs_value : in std_logic_vector (31 downto 0);
-        rt_value : in std_logic_vector (31 downto 0);
-        immdt    : in std_logic_vector (31 downto 0);
-        op_alu   : in std_logic_vector (3 downto 0);
-        rdReg    : in std_logic_vector (4 downto 0); 
-        rtReg    : in std_logic_vector (4 downto 0);
-        OrigALU  : in std_logic;
-        RegDst   : in std_logic;
-        e_wb     : in std_logic_vector(1 downto 0);
-        e_m      : in std_logic_vector(1 downto 0);
-        s_wb     : out std_logic_vector(1 downto 0);
-        s_m      : out std_logic_vector(1 downto 0);
-        write_reg : out std_logic_vector (4 downto 0);
-        res      : out std_logic_vector (31 downto 0);
-        write_data : out std_logic_vector(31 downto 0);
-        overflow : out std_logic
-
+        e_wb            : in std_logic_vector(1 downto 0);
+        e_m             : in std_logic_vector(1 downto 0);
+        ex              : in std_logic_vector(5 downto 0);
+        v_pc            : in std_logic_vector(31 downto 0);
+        read_data1      : in std_logic_vector(31 downto 0);
+        read_data2      : in std_logic_vector(31 downto 0);
+        immd            : in std_logic_vector (31 downto 0);
+        rt              : in std_logic_vector(4 downto 0);
+        rd              : in std_logic_vector(4 downto 0);
+        s_wb            : out std_logic_vector(1 downto 0);
+        s_m             : out std_logic_vector(1 downto 0);
+        endereco_salto  : out std_logic_vector(31 downto 0);
+        zero            : out std_logic; --ajeitar depois
+        ula_res         : out std_logic_vector(31 downto 0);
+        s_read_data2    : out std_logic_vector(31 downto 0);
+        write_reg       : out std_logic_vector(4 downto 0)
     );
     end component execucao_instrucao;
 
@@ -332,22 +331,22 @@ begin
 
     execucao_instrucao_u : execucao_instrucao
     port map (
-        rs_value => sv_rs_IDEX_ex,
-        rt_value => sv_rt_IDEX_ex,
-        immdt    => s_immd_IDEX_ex,
-        op_alu   => s_ex_IDEX_ex(4 downto 1),
-        rdReg    => s_rd_IDEX_ex,
-        rtReg    => s_rt_IDEX_EX,
-        OrigALU  => s_ex_IDEX_ex(0),
-        RegDst   => s_ex_IDEX_ex(5),
-        e_wb     => s_wb_IDEX_ex,
-        e_m      => s_m_IDEX_ex,
-        s_wb     => wb_ex_EXMEM,
-        s_m      => m_ex_EXMEM,
-        write_reg => write_reg_dst_ex_EXMEM,
-        res      => ula_res_ex_EXMEM,
-        write_data => write_data_ex_EXMEM,
-        overflow => open -- ajeitar depois
+        e_wb => s_wb_IDEX_ex,
+        e_m  => s_m_IDEX_ex,
+        ex   => s_ex_IDEX_ex,
+        v_pc => (others => '0'), --ajeitar depois
+        read_data1 => sv_rs_IDEX_ex,
+        read_data2 => sv_rt_IDEX_ex,
+        immd => s_immd_IDEX_ex,
+        rt   => s_rt_IDEX_EX,
+        rd   => s_rd_IDEX_ex,
+        s_wb => wb_ex_EXMEM,
+        s_m  => m_ex_EXMEM,
+        endereco_salto => open, -- ajeitar depois
+        zero => open, --ajeitar depois
+        ula_res => ula_res_ex_EXMEM,
+        s_read_data2 => write_data_ex_EXMEM,
+        write_reg => write_reg_dst_ex_EXMEM
     );
 
     EXMEM_U : EXMEM
