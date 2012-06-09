@@ -40,8 +40,8 @@ architecture mips of mips is
         ev_rs   : in std_logic_vector(31 downto 0);
         ev_rt   : in std_logic_vector(31 downto 0);
         e_immd  : in std_logic_vector(31 downto 0);
-        e_rd    : in std_logic_vector(5 downto 0);
-        e_rt    : in std_logic_vector(5 downto 0);
+        e_rd    : in std_logic_vector(4 downto 0);
+        e_rt    : in std_logic_vector(4 downto 0);
         s_wb    : out std_logic_vector(1 downto 0);
         s_m     : out std_logic_vector(1 downto 0);
         s_ex    : out std_logic_vector(5 downto 0);
@@ -49,8 +49,8 @@ architecture mips of mips is
         sv_rs   : out std_logic_vector(31 downto 0);
         sv_rt   : out std_logic_vector(31 downto 0);
         s_immd  : out std_logic_vector(31 downto 0);
-        s_rd    : out std_logic_vector(5 downto 0);
-        s_rt    : out std_logic_vector(5 downto 0)
+        s_rd    : out std_logic_vector(4 downto 0);
+        s_rt    : out std_logic_vector(4 downto 0)
     );
     end component IDEX;
 
@@ -141,9 +141,15 @@ architecture mips of mips is
         rtReg    : in std_logic_vector (4 downto 0);
         OrigALU  : in std_logic;
         RegDst   : in std_logic;
+        e_wb     : in std_logic_vector(1 downto 0);
+        e_m      : in std_logic_vector(1 downto 0);
+        s_wb     : out std_logic_vector(1 downto 0);
+        s_m      : out std_logic_vector(1 downto 0);
         write_reg : out std_logic_vector (4 downto 0);
         res      : out std_logic_vector (31 downto 0);
+        write_data : out std_logic_vector(31 downto 0);
         overflow : out std_logic
+
     );
     end component execucao_instrucao;
 
@@ -212,10 +218,10 @@ architecture mips of mips is
 
     signal s_wb_idex_ex : std_logic_vector(1 downto 0);
     signal s_m_idex_ex : std_logic_vector(1 downto 0);
-    signal s_ex_idex_ex : std_logic_vector(1 downto 0);
+    signal s_ex_idex_ex : std_logic_vector(5 downto 0);
     signal sv_pc_idex_ex : std_logic_vector(31 downto 0);
-    signal sv_rs_idex_ex : std_logic_vector(4 downto 0);
-    signal sv_rt_idex_ex : std_logic_vector(4 downto 0);
+    signal sv_rs_idex_ex : std_logic_vector(31 downto 0);
+    signal sv_rt_idex_ex : std_logic_vector(31 downto 0);
     signal s_immd_idex_ex : std_logic_vector(31 downto 0);
     signal s_rd_idex_ex : std_logic_vector(4 downto 0);
     signal s_rt_idex_ex : std_logic_vector(4 downto 0);
@@ -351,7 +357,7 @@ begin
         e_wb  => wb_ex_EXMEM,
         e_m   => m_ex_EXMEM,    
         ej_endereco => (others => '0'), -- ajeitar depois!
-        e_zero      => (others => '0'), -- ajeitar depois!
+        e_zero      => '0', -- ajeitar depois!
         e_ula       => ula_res_ex_EXMEM,
         e_dado      => write_data_ex_EXMEM,
         e_reg_dst   => write_reg_dst_ex_EXMEM,

@@ -12,8 +12,8 @@ entity IDEX is
         ev_rs   : in std_logic_vector(31 downto 0);
         ev_rt   : in std_logic_vector(31 downto 0);
         e_immd  : in std_logic_vector(31 downto 0);
-        e_rd    : in std_logic_vector(5 downto 0);
-        e_rt    : in std_logic_vector(5 downto 0);
+        e_rd    : in std_logic_vector(4 downto 0);
+        e_rt    : in std_logic_vector(4 downto 0);
         s_wb    : out std_logic_vector(1 downto 0);
         s_m     : out std_logic_vector(1 downto 0);
         s_ex    : out std_logic_vector(5 downto 0);
@@ -21,8 +21,8 @@ entity IDEX is
         sv_rs   : out std_logic_vector(31 downto 0);
         sv_rt   : out std_logic_vector(31 downto 0);
         s_immd  : out std_logic_vector(31 downto 0);
-        s_rd    : out std_logic_vector(5 downto 0);
-        s_rt    : out std_logic_vector(5 downto 0)
+        s_rd    : out std_logic_vector(4 downto 0);
+        s_rt    : out std_logic_vector(4 downto 0)
     );
 end IDEX;
 
