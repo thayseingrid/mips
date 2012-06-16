@@ -9,14 +9,12 @@ architecture mips_tb of mips_tb is
     component mips is
     port (
         clock : in std_logic;
-        reset : in std_logic;
-        res   : out std_logic_vector(31 downto 0)
+        reset : in std_logic
     );
     end component mips;
 
     signal clock : std_logic;
     signal reset : std_logic;
-    signal res   : std_logic_vector(31 downto 0);
 begin
     process
     begin
@@ -30,8 +28,6 @@ begin
     begin
         reset <= '1';
         wait for 25 ns;
-        reset <= '1';
-        wait for 10 ns;
         reset <= '0';
         wait;
     end process;
@@ -39,9 +35,6 @@ begin
     mips_u : mips
     port map (
         clock => clock,
-        reset => reset,
-        res   => res
+        reset => reset
     );
 end mips_tb;
-
-

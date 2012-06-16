@@ -5,8 +5,7 @@ use ieee.numeric_std.all;
 entity mips is
     port (
         clock : in std_logic;
-        reset : in std_logic;
-        res   : out std_logic_vector(31 downto 0)
+        reset : in std_logic
     );
 end mips;
 
@@ -41,6 +40,7 @@ architecture mips of mips is
         ev_rs   : in std_logic_vector(31 downto 0);
         ev_rt   : in std_logic_vector(31 downto 0);
         e_immd  : in std_logic_vector(31 downto 0);
+        e_target : in std_logic_vector(31 downto 0);
         e_rd    : in std_logic_vector(4 downto 0);
         e_rt    : in std_logic_vector(4 downto 0);
         s_wb    : out std_logic_vector(1 downto 0);
@@ -51,6 +51,7 @@ architecture mips of mips is
         sv_rs   : out std_logic_vector(31 downto 0);
         sv_rt   : out std_logic_vector(31 downto 0);
         s_immd  : out std_logic_vector(31 downto 0);
+        s_target : out std_logic_vector(31 downto 0);
         s_rd    : out std_logic_vector(4 downto 0);
         s_rt    : out std_logic_vector(4 downto 0)
     );
@@ -120,7 +121,7 @@ architecture mips of mips is
         e_immd      : in std_logic_vector(15 downto 0);
         write_reg   : in std_logic_vector(4 downto 0);
         write_data  : in std_logic_vector(31 downto 0);
-        target      : in std_logic_vector(25 downto 0);
+        e_target    : in std_logic_vector(25 downto 0);
         s_wb        : out std_logic_vector(1 downto 0);
         s_m         : out std_logic_vector(1 downto 0);
         s_ex        : out std_logic_vector(5 downto 0);
@@ -304,7 +305,7 @@ begin
         e_immd => immd_IFID_id,
         write_reg => write_reg_id_wb,
         write_data => write_data_id_wb,
-        target => target_IFID_id,
+        e_target => target_IFID_id,
         s_wb => s_wb_id_IDEX,
         s_m => s_m_id_IDEX,
         s_ex => s_ex_id_IDEX,
@@ -330,6 +331,7 @@ begin
         ev_rs => read_data1_id_IDEX,
         ev_rt => read_data2_id_IDEX,
         e_immd => s_immd_id_IDEX,
+        e_target => target_id_IDEX,
         e_rd => s_rd_id_IDEX,
         e_rt => s_rt_id_IDEX,
         s_wb => s_wb_IDEX_ex,
@@ -340,6 +342,7 @@ begin
         sv_rs => sv_rs_IDEX_ex,
         sv_rt => sv_rt_IDEX_ex,
         s_immd => s_immd_IDEX_ex,
+        s_target => target_IDEX_ex,
         s_rd => s_rd_IDEX_ex,
         s_rt => s_rt_IDEX_EX
     );
@@ -432,15 +435,6 @@ begin
 
 
 end mips;
-
-
-
-
-
-
-
-
-
 
 
 

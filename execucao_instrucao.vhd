@@ -18,7 +18,7 @@ entity execucao_instrucao is
         s_wb            : out std_logic_vector(1 downto 0);
         s_m             : out std_logic_vector(1 downto 0);
         endereco_salto  : out std_logic_vector(31 downto 0);
-        zero            : out std_logic; --ajeitar depois
+        zero            : out std_logic; 
         ula_res         : out std_logic_vector(31 downto 0);
         s_read_data2    : out std_logic_vector(31 downto 0);
         write_reg       : out std_logic_vector(4 downto 0)
@@ -26,6 +26,7 @@ entity execucao_instrucao is
 end execucao_instrucao;
 
 architecture execucao_instrucao of execucao_instrucao is
+    signal v_ula_res    : std_logic_vector(31 downto 0);
     signal immd_target  : std_logic_vector(31 downto 0);
     signal v_op2        : std_logic_vector(31 downto 0);
     signal ALUop        : std_logic_vector(3 downto 0);
@@ -35,8 +36,17 @@ begin
 
     s_wb <= e_wb;
     s_m  <= e_m;
-    zero <= '0'; --ajeitar depois
     s_read_data2 <= read_data2;
+    ula_res <= v_ula_res;
+
+    process(v_ula_res)
+    begin
+        if v_ula_res = x"00000000" then
+            zero <= '1';
+        else
+            zero <= '0';
+        end if;
+    end process;
     
     process(ex2, immd, target)
     begin
@@ -78,22 +88,21 @@ begin
     process(ex, read_data1, v_op2)
     begin
         if ALUop = "0010" then  -- soma, LW e SW
-            ula_res <= std_logic_vector(signed(read_data1) + signed(v_op2));
-        elsif ALUop = "0110" then  -- subtração
-            ula_res <= std_logic_vector(signed(read_data1) - signed(v_op2));
+            v_ula_res <= std_logic_vector(signed(read_data1) + signed(v_op2));
+        elsif ALUop = "0110" then  -- subtração, beq
+            v_ula_res <= std_logic_vector(signed(read_data1) - signed(v_op2));
         elsif ALUop = "0000" then -- and
-            ula_res <= read_data1 and v_op2;
+            v_ula_res <= read_data1 and v_op2;
         elsif ALUop = "0001" then -- or
-            ula_res <= read_data1 or v_op2;
+            v_ula_res <= read_data1 or v_op2;
         elsif ALUop = "0111" then  -- SLT (set on less than)
             if read_data1 < v_op2 then
-              ula_res <= "000000000000000000000000000001";
+              v_ula_res <= "000000000000000000000000000001";
            else
-              ula_res <= "000000000000000000000000000000";
+              v_ula_res <= "000000000000000000000000000000";
             end if;
         else 
-           -- ajeitar depois
-           ula_res <= x"BEAFCAFE"; --em caso de erro aparece isso
+           v_ula_res <= x"BEAFCAFE"; --em caso de erro aparece isso
         end if;
     end process;
 

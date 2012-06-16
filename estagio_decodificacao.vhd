@@ -75,6 +75,12 @@ begin
     -- controle
     process(opcode, shamt, funct)
     begin
+        if opcode = "000010" then --para escolher o target ou o immd
+            s_ex2 <= '0';
+        else 
+            s_ex2 <= '1';
+        end if;
+
         if opcode = "000000" then
             if shamt = "00000" and funct = "100000" then
                 s_ex <= "100100"; -- código da adição
@@ -96,6 +102,10 @@ begin
                 s_ex <= "101110"; -- código do SLT (set on less than)
                 s_m <= "00";
                 s_wb <= "10";
+              else 
+                s_ex <= "000000";
+                s_m <= "00";
+                s_wb <= "10";
             end if;
 	
         elsif opcode = "001000" then  --addi
@@ -109,6 +119,14 @@ begin
         elsif opcode = "101011" then --sw
             s_ex <= "000101"; 
             s_m <= "01";
+            s_wb <= "00";
+        elsif opcode = "000100" then -- beq
+            s_ex <= "001100";
+            s_m <= "10";
+            s_wb <= "01";
+        elsif opcode = "000010" then -- j
+            s_ex <= "000000";
+            s_m <= "10";
             s_wb <= "00";
         else
             s_ex <= "000000";
