@@ -40,9 +40,8 @@ begin
     begin
         if reset = '1' then
             pc <= (others => '0');
-            quatro <= x"00000001";
         elsif clock'event and clock = '1' then
-            if pc_load = '0' then
+            if pc_load = '1' then
                 pc <= v_mux;
             end if;
         end if;        

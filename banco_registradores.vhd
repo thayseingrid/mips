@@ -23,7 +23,7 @@ begin
     process (clock, reg_write, write_data)
     begin
         if reset = '1' then
-            regs <= (3 => x"00000005", others => x"00000000");
+            regs <= (others => x"00000000");
         elsif clock'event and clock = '1' then
             if reg_write = '1' then
                 if write_reg = "00000" then

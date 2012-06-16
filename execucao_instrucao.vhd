@@ -85,7 +85,7 @@ begin
     -- ULA
     ALUop <= ex(4 downto 1);
 
-    process(ex, read_data1, v_op2)
+    process(ALUop, read_data1, v_op2)
     begin
         if ALUop = "0010" then  -- soma, LW e SW
             v_ula_res <= std_logic_vector(signed(read_data1) + signed(v_op2));
@@ -96,10 +96,10 @@ begin
         elsif ALUop = "0001" then -- or
             v_ula_res <= read_data1 or v_op2;
         elsif ALUop = "0111" then  -- SLT (set on less than)
-            if read_data1 < v_op2 then
-              v_ula_res <= "000000000000000000000000000001";
+           if signed(read_data1) < signed(v_op2) then
+              v_ula_res <= x"00000001";
            else
-              v_ula_res <= "000000000000000000000000000000";
+              v_ula_res <= x"00000000";
             end if;
         else 
            v_ula_res <= x"BEAFCAFE"; --em caso de erro aparece isso

@@ -256,6 +256,11 @@ architecture mips of mips is
     signal ex2_IDEX_ex : std_logic;
     signal target_id_IDEX : std_logic_vector(31 downto 0);
     signal target_IDEX_ex : std_logic_vector(31 downto 0);
+
+    signal zero_ex_EXMEM  : std_logic;
+    signal zero_EXMEM_mem : std_logic;
+    signal endereco_salto_ex_EXMEM : std_logic_vector(31 downto 0);
+    
     
 begin
     pc_load <= '1';
@@ -353,7 +358,7 @@ begin
         e_m  => s_m_IDEX_ex,
         ex   => s_ex_IDEX_ex,
         ex2  => ex2_IDEX_ex,
-        v_pc => (others => '0'), --ajeitar depois
+        v_pc => sv_pc_IDEX_ex,
         read_data1 => sv_rs_IDEX_ex,
         read_data2 => sv_rt_IDEX_ex,
         immd => s_immd_IDEX_ex,
@@ -362,8 +367,8 @@ begin
         rd   => s_rd_IDEX_ex,
         s_wb => wb_ex_EXMEM,
         s_m  => m_ex_EXMEM,
-        endereco_salto => open, -- ajeitar depois
-        zero => open, --ajeitar depois
+        endereco_salto => endereco_salto_ex_EXMEM,
+        zero => zero_ex_EXMEM, 
         ula_res => ula_res_ex_EXMEM,
         s_read_data2 => write_data_ex_EXMEM,
         write_reg => write_reg_dst_ex_EXMEM
@@ -375,15 +380,15 @@ begin
         reset => reset,     
         e_wb  => wb_ex_EXMEM,
         e_m   => m_ex_EXMEM,    
-        ej_endereco => (others => '0'), -- ajeitar depois!
-        e_zero      => '0', -- ajeitar depois!
+        ej_endereco => endereco_salto_ex_EXMEM,
+        e_zero      => zero_ex_EXMEM,
         e_ula       => ula_res_ex_EXMEM,
         e_dado      => write_data_ex_EXMEM,
         e_reg_dst   => write_reg_dst_ex_EXMEM,
         s_wb        => wb_EXMEM_mem,
         s_m         => m_EXMEM_mem,
         sj_endereco => endereco_salto_EXMEM_mem,
-        s_zero      => open, --ajeitar depois
+        s_zero      => zero_EXMEM_mem,
         s_ula       => ula_res_EXMEM_mem,
         s_dado      => dado_EXMEM_mem,
         s_reg_dst   => write_reg_EXMEM_mem
@@ -395,7 +400,7 @@ begin
         e_wb  => wb_EXMEM_mem,      
         e_m   => m_EXMEM_mem,   
         ej_endereco => endereco_salto_EXMEM_mem,
-        e_zero      => '0', -- ajeitar depois
+        e_zero      => zero_EXMEM_mem,
         e_ula       => ula_res_EXMEM_mem,
         e_dado      => dado_EXMEM_mem,
         e_reg_dst   => write_reg_EXMEM_mem,
