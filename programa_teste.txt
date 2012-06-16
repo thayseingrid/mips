@@ -1,0 +1,57 @@
+    add r1, r0, r0
+    add r2, r0, r0
+    addi r3, r0, 10
+
+enquanto:
+    slt r8, r1, r3
+
+    add r0, r0, r0
+    add r0, r0, r0
+    add r0, r0, r0
+
+    beq r8, r0, fim
+
+    add r0, r0, r0
+    add r0, r0, r0
+    add r0, r0, r0
+
+    add r8, r1, r7
+
+    add r0, r0, r0
+    add r0, r0, r0
+    add r0, r0, r0
+
+    sw r2, 0(r8)
+    addi r1, r1, 1
+
+    add r0, r0, r0
+    add r0, r0, r0
+    add r0, r0, r0
+
+    add r2, r2, r1
+    j enquanto
+
+    add r0, r0, r0
+    add r0, r0, r0
+    add r0, r0, r0
+
+fim:
+    lw r2, 9(r7)
+
+
+int v[10]; //r7
+int i;     //r1
+int j      //r2
+
+i = 0;
+j = 0;
+
+while (i < 10) {
+    v[i] = j;
+    i = i + 1;
+    j = j + i;
+}
+
+j = v[9];
+
+
