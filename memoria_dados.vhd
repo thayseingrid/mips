@@ -25,11 +25,7 @@ begin
                 ram(to_integer(unsigned(endereco))) <= v_in; --ram[endereco] = v_in
             end if;
         end if;
-    end process;
 
-    -- processo de leitura
-    process (endereco)
-    begin
         v_out <= ram(to_integer(unsigned(endereco)));
     end process;
 end memoria_dados;
